@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/penguinsAreFunny/bugFinder-framework"
+    "url": "git+https://github.com/penguinsAreFunny/bugFinder-commitPath-annotator-commitMsg"
   },
-  "homepage": "https://github.com/penguinsAreFunny/bugFinder-framework#readme",
+  "homepage": "https://github.com/penguinsAreFunny/bugFinder-commitPath-annotator-commitMsg#readme",
   "bugs": {
-    "url": "https://github.com/penguinsAreFunny/bugFinder-framework/issues"
+    "url": "https://github.com/penguinsAreFunny/bugFinder-commitPath-annotator-commitMsg/issues"
   },
   "files": [
     "dist/**/*"
@@ -38,6 +38,8 @@
   },
   "dependencies": {
     "@types/node": "^15.12.2",
-    "bugfinder-framework": "^3.0.1"
+    "bugfinder-framework": "^3.0.1",
+    "bugfinder-localityrecorder-commit": "^1.0.2",
+    "bugfinder-localityrecorder-commitpath": "^1.0.5"
   }
 }
