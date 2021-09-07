@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {Annotator} from "bugfinder-framework";
+import {Annotator, LocalityMap} from "bugfinder-framework";
 import {CommitPath} from "bugfinder-localityrecorder-commitpath";
 import {
     FILTER_CORRECTIVE_MESSAGE,
@@ -14,15 +14,23 @@ export class CommitPathsAnnotator implements Annotator<CommitPath, number> {
     @inject(BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES.testFileMatcher)
     testFileMatcher: RegExp;
 
-    annotate(locality: CommitPath): number {
-        if (FILTER_CORRECTIVE_MESSAGE(locality.commit)
-            && FILTER_LESS_OR_EQUAL_TWO_FILES(locality.commit, this.testFileMatcher)
-            && FILTER_NO_MERGE_COMMIT(locality.commit)
-            && FILTER_NO_TEST_FILE(locality, this.testFileMatcher)) {
+    annotate(localities: CommitPath[]): LocalityMap<CommitPath, number> {
+        const map = new LocalityMap<CommitPath, number>();
 
-            return 1;
+        for(const locality of localities){
+            let annotation: number = 0;
+            if (FILTER_CORRECTIVE_MESSAGE(locality.commit)
+                && FILTER_LESS_OR_EQUAL_TWO_FILES(locality.commit, this.testFileMatcher)
+                && FILTER_NO_MERGE_COMMIT(locality.commit)
+                && FILTER_NO_TEST_FILE(locality, this.testFileMatcher)) {
+
+                annotation = 1
+            }
+            annotation = 0
+            map.set(locality, annotation)
         }
-        return 0;
+
+        return map;
     }
 
 }
