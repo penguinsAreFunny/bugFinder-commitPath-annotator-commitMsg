@@ -8,22 +8,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommitPathsAnnotator = void 0;
 var inversify_1 = require("inversify");
+var bugfinder_framework_1 = require("bugfinder-framework");
 var filter_1 = require("./filter");
 var TYPES_1 = require("./TYPES");
 var CommitPathsAnnotator = /** @class */ (function () {
     function CommitPathsAnnotator() {
     }
-    CommitPathsAnnotator.prototype.annotate = function (locality) {
-        if ((0, filter_1.FILTER_CORRECTIVE_MESSAGE)(locality.commit)
-            && (0, filter_1.FILTER_LESS_OR_EQUAL_TWO_FILES)(locality.commit, this.testFileMatcher)
-            && (0, filter_1.FILTER_NO_MERGE_COMMIT)(locality.commit)
-            && (0, filter_1.FILTER_NO_TEST_FILE)(locality, this.testFileMatcher)) {
-            return 1;
+    CommitPathsAnnotator.prototype.annotate = function (localities) {
+        var e_1, _a;
+        var map = new bugfinder_framework_1.LocalityMap();
+        try {
+            for (var localities_1 = __values(localities), localities_1_1 = localities_1.next(); !localities_1_1.done; localities_1_1 = localities_1.next()) {
+                var locality = localities_1_1.value;
+                var annotation = 0;
+                if ((0, filter_1.FILTER_CORRECTIVE_MESSAGE)(locality.commit)
+                    && (0, filter_1.FILTER_LESS_OR_EQUAL_TWO_FILES)(locality.commit, this.testFileMatcher)
+                    && (0, filter_1.FILTER_NO_MERGE_COMMIT)(locality.commit)
+                    && (0, filter_1.FILTER_NO_TEST_FILE)(locality, this.testFileMatcher)) {
+                    annotation = 1;
+                }
+                annotation = 0;
+                map.set(locality, annotation);
+            }
         }
-        return 0;
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (localities_1_1 && !localities_1_1.done && (_a = localities_1.return)) _a.call(localities_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return map;
     };
     __decorate([
         (0, inversify_1.inject)(TYPES_1.BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES.testFileMatcher),
@@ -35,4 +64,4 @@ var CommitPathsAnnotator = /** @class */ (function () {
     return CommitPathsAnnotator;
 }());
 exports.CommitPathsAnnotator = CommitPathsAnnotator;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UGF0aHNBbm5vdGF0b3IuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UGF0aHNBbm5vdGF0b3IudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7O0FBQUEsdUNBQTZDO0FBRzdDLG1DQUtrQjtBQUNsQixpQ0FBdUU7QUFHdkU7SUFBQTtJQWVBLENBQUM7SUFYRyx1Q0FBUSxHQUFSLFVBQVMsUUFBb0I7UUFDekIsSUFBSSxJQUFBLGtDQUF5QixFQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUM7ZUFDdkMsSUFBQSx1Q0FBOEIsRUFBQyxRQUFRLENBQUMsTUFBTSxFQUFFLElBQUksQ0FBQyxlQUFlLENBQUM7ZUFDckUsSUFBQSwrQkFBc0IsRUFBQyxRQUFRLENBQUMsTUFBTSxDQUFDO2VBQ3ZDLElBQUEsNEJBQW1CLEVBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxlQUFlLENBQUMsRUFBRTtZQUV4RCxPQUFPLENBQUMsQ0FBQztTQUNaO1FBQ0QsT0FBTyxDQUFDLENBQUM7SUFDYixDQUFDO0lBWEQ7UUFEQyxJQUFBLGtCQUFNLEVBQUMsc0RBQThDLENBQUMsZUFBZSxDQUFDO2tDQUN0RCxNQUFNO2lFQUFDO0lBRmYsb0JBQW9CO1FBRGhDLElBQUEsc0JBQVUsR0FBRTtPQUNBLG9CQUFvQixDQWVoQztJQUFELDJCQUFDO0NBQUEsQUFmRCxJQWVDO0FBZlksb0RBQW9CIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29tbWl0UGF0aHNBbm5vdGF0b3IuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29tbWl0UGF0aHNBbm5vdGF0b3IudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSx1Q0FBNkM7QUFDN0MsMkRBQTJEO0FBRTNELG1DQUtrQjtBQUNsQixpQ0FBdUU7QUFHdkU7SUFBQTtJQXVCQSxDQUFDO0lBbkJHLHVDQUFRLEdBQVIsVUFBUyxVQUF3Qjs7UUFDN0IsSUFBTSxHQUFHLEdBQUcsSUFBSSxpQ0FBVyxFQUFzQixDQUFDOztZQUVsRCxLQUFzQixJQUFBLGVBQUEsU0FBQSxVQUFVLENBQUEsc0NBQUEsOERBQUM7Z0JBQTdCLElBQU0sUUFBUSx1QkFBQTtnQkFDZCxJQUFJLFVBQVUsR0FBVyxDQUFDLENBQUM7Z0JBQzNCLElBQUksSUFBQSxrQ0FBeUIsRUFBQyxRQUFRLENBQUMsTUFBTSxDQUFDO3VCQUN2QyxJQUFBLHVDQUE4QixFQUFDLFFBQVEsQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLGVBQWUsQ0FBQzt1QkFDckUsSUFBQSwrQkFBc0IsRUFBQyxRQUFRLENBQUMsTUFBTSxDQUFDO3VCQUN2QyxJQUFBLDRCQUFtQixFQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsZUFBZSxDQUFDLEVBQUU7b0JBRXhELFVBQVUsR0FBRyxDQUFDLENBQUE7aUJBQ2pCO2dCQUNELFVBQVUsR0FBRyxDQUFDLENBQUE7Z0JBQ2QsR0FBRyxDQUFDLEdBQUcsQ0FBQyxRQUFRLEVBQUUsVUFBVSxDQUFDLENBQUE7YUFDaEM7Ozs7Ozs7OztRQUVELE9BQU8sR0FBRyxDQUFDO0lBQ2YsQ0FBQztJQW5CRDtRQURDLElBQUEsa0JBQU0sRUFBQyxzREFBOEMsQ0FBQyxlQUFlLENBQUM7a0NBQ3RELE1BQU07aUVBQUM7SUFGZixvQkFBb0I7UUFEaEMsSUFBQSxzQkFBVSxHQUFFO09BQ0Esb0JBQW9CLENBdUJoQztJQUFELDJCQUFDO0NBQUEsQUF2QkQsSUF1QkM7QUF2Qlksb0RBQW9CIn0=
