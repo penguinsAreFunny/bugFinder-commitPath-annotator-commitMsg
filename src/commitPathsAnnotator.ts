@@ -23,17 +23,6 @@ export class CommitPathsAnnotator implements Annotator<CommitPath, number> {
                 && FILTER_NO_MERGE_COMMIT(locality.commit)
                 && FILTER_NO_TEST_FILE(locality, this.testFileMatcher))? 1: 0
             map.set(locality, annotation)
-
-
-            const corrective = FILTER_CORRECTIVE_MESSAGE(locality.commit)
-            //console.log("CORRECTIVE")
-            const lessOrEqual = FILTER_LESS_OR_EQUAL_TWO_FILES(locality.commit, this.testFileMatcher)
-            //console.log("LESS_OR_EQUAL_TWO_FILES")
-            const noMerge = FILTER_NO_MERGE_COMMIT(locality.commit)
-            //console.log("NO_MERGE_COMMIT")
-            const noTest = FILTER_NO_TEST_FILE(locality, this.testFileMatcher)
-            //console.log("NO_TEST_FILE")
-            console.log(corrective, "\t", lessOrEqual, "\t", noMerge, "\t", noTest, "\t")
         }
 
         return map;

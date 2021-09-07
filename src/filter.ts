@@ -61,5 +61,5 @@ export const FILTER_NO_MERGE_COMMIT = (locality: Commit) => {
  * @constructor
  */
 export const FILTER_NO_TEST_FILE = (commitPath: CommitPath, testFileMatcher: RegExp) => {
-    return !commitPath.path.path.match(testFileMatcher)
+    return !commitPath.path?.path.match(testFileMatcher)
 }
