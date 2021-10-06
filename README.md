@@ -1,11 +1,12 @@
 # Description
 This package is used as a Annotator for CommitPaths of the machine learning pipeline of the
-[bugfinder-framework](https://github.com/penguinsAreFunny/bugFinder-framework#readme) or 
-([npm:bugfinder-framework](https://www.npmjs.com/package/bugfinder-framework)). 
+[bugfinder-framework](https://github.com/penguinsAreFunny/bugFinder-framework#readme) (or 
+[npm:bugfinder-framework](https://www.npmjs.com/package/bugfinder-framework)). 
 You can use this package to annotate (create classes/labels) for your localities of type CommitPath.
 You can define a regular expression for test-files which will be ignored.
 A CommitPath is marked as a fix-indicating CommitPath if the Commit has a corrective message, touches less or equal
 than two files, is not a merge commit and commit does not affect test files.
+The annotations of the n predecessors CommitPaths will be summed up to achieve the annotation of the current CommitPath. 
 
  Corrective commit message:
  
@@ -36,7 +37,7 @@ and installing it:
  
     
 # Usage
-    npm i -D bugfinder-commitpath-annotator-commitmsg
+    npm i -D bugfinder-commitpath-annotator-commitmsgpredecessors
     
 This package is not intended to be used independently, but feel free to do so.
 Here is an example quantifying TypeScript-Files of npm projects. Reading and writing localities from a
@@ -53,7 +54,7 @@ import {
 import {CommitPath} from "bugfinder-localityrecorder-commitpath";
 import {BUGFINDER_DB_COMMITPATH_MONGODB_TYPES, CommitPathsMongoDB} from "bugfinder-commitpath-db-mongodb";
 import {
-    BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES, CommitPathsAnnotator,
+    BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES, CommitPathsPredecessorsAnnotator,
 } from "bugfinder-commitpath-annotator-commitmsg";
 import {annotatorContainer} from "bugfinder-framework-defaultContainer";
 
@@ -65,7 +66,7 @@ const mongoDBConfig: MongoDBConfig = {
 const testFileMatcher = /(test?\/.*\.*)/
 
 // binding Annotator and its dependencies
-container.bind<Annotator<CommitPath, number>>(ANNOTATOR_TYPES.annotator).to(CommitPathsAnnotator)
+container.bind<Annotator<CommitPath, number>>(ANNOTATOR_TYPES.annotator).to(CommitPathsPredecessorsAnnotator)
 container.bind<RegExp>(BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES.testFileMatcher).toConstantValue(testFileMatcher)
 
 // binding DB and its dependencies

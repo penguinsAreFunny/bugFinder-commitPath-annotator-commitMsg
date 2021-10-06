@@ -18,14 +18,17 @@ export class CommitPathsAnnotator implements Annotator<CommitPath, number> {
         const map = new LocalityMap<CommitPath, number>();
 
         for(const locality of localities){
-            const annotation = (FILTER_CORRECTIVE_MESSAGE(locality.commit)
-                && FILTER_LESS_OR_EQUAL_TWO_FILES(locality.commit, this.testFileMatcher)
-                && FILTER_NO_MERGE_COMMIT(locality.commit)
-                && FILTER_NO_TEST_FILE(locality, this.testFileMatcher))? 1: 0
+            const annotation = this.annotateLoc(locality)
             map.set(locality, annotation)
         }
 
         return map;
     }
 
+    public annotateLoc(locality: CommitPath): number{
+        return (FILTER_CORRECTIVE_MESSAGE(locality.commit)
+            && FILTER_LESS_OR_EQUAL_TWO_FILES(locality.commit, this.testFileMatcher)
+            && FILTER_NO_MERGE_COMMIT(locality.commit)
+            && FILTER_NO_TEST_FILE(locality, this.testFileMatcher))? 1: 0
+    }
 }
