@@ -42,7 +42,7 @@ This package is not intended to be used independently, but feel free to do so.
 Here is an example quantifying TypeScript-Files of npm projects. Reading and writing localities from a
 MongoDB. You can create your localities with [bugfinder-localityrecorder-commitpath](https://www.npmjs.com/package/bugfinder-localityrecorder-commitpath).
 inversify.config.ts
-```
+```typescript
 import {MongoDBConfig} from "bugfinder-commit-db-mongodb";
 import {
     AnnotationFactory,
@@ -79,7 +79,7 @@ container.bind<AnnotationFactory<CommitPath, number>>(ANNOTATOR_TYPES.annotation
 export {container};
 ```
 main.ts
-```
+```typescript
 import "reflect-metadata";
 import {container} from "./inversify.config"
 import {
