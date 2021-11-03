@@ -14,7 +14,9 @@ export class CommitPathsAnnotator implements Annotator<CommitPath, number> {
     @inject(BUGFINDER_COMMITPATH_ANNOTATOR_COMMITMSG_TYPES.testFileMatcher)
     testFileMatcher: RegExp;
 
-    annotate(localities: CommitPath[]): LocalityMap<CommitPath, number> {
+    async annotate(localities: CommitPath[]):
+        Promise<LocalityMap<CommitPath, number>> {
+
         const map = new LocalityMap<CommitPath, number>();
 
         for (const locality of localities) {
